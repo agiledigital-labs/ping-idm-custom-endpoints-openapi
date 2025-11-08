@@ -1,0 +1,43 @@
+openapi: 3.0.0
+info:
+  title: Converted IDM API
+  version: 1.0.0
+paths:
+  /v1:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: string
+                  pattern: ^[-_a-zA-Z0-9]+$
+                type:
+                  type: string
+                  pattern: ^NDIS$
+              required:
+                - id
+                - type
+      responses:
+        "200":
+          description: Successful response
+    get:
+      parameters:
+        - name: id
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: ^[-_a-zA-Z0-9]+$
+        - name: type
+          in: query
+          required: true
+          schema:
+            type: string
+            pattern: ^NDIS$
+      responses:
+        "200":
+          description: Successful response
+components: {}

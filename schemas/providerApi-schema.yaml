@@ -1,0 +1,176 @@
+openapi: 3.0.0
+info:
+  title: Converted IDM API
+  version: 1.0.0
+paths:
+  /v1/register-device:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: ^[a-zA-Z0-9-_. ]+$
+                environment:
+                  type: string
+                  pattern: ^(test|prod)$
+                abn:
+                  type: string
+                  pattern: ^[1-9][0-9]{10}$
+                type:
+                  type: string
+                  pattern: ^[a-zA-Z0-9-_. ]+$
+                aggregatorAbn:
+                  type: string
+                  pattern: ^[1-9][0-9]{10}$
+              required:
+                - name
+                - environment
+                - abn
+                - type
+      responses:
+        "200":
+          description: Successful response
+  /v1/activate-device:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                csr:
+                  type: string
+                  pattern: ^-----BEGIN NEW CERTIFICATE REQUEST-----.*-----END NEW CERTIFICATE
+                    REQUEST-----$
+                deviceId:
+                  type: string
+                  pattern: ^[a-zA-Z0-9-_. ]+$
+              required:
+                - csr
+                - deviceId
+      responses:
+        "200":
+          description: Successful response
+  /v1/add-cert:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                csr:
+                  type: string
+                  pattern: ^-----BEGIN NEW CERTIFICATE REQUEST-----.*-----END NEW CERTIFICATE
+                    REQUEST-----$
+                deviceId:
+                  type: string
+                  pattern: ^[a-zA-Z0-9-_. ]+$
+              required:
+                - csr
+                - deviceId
+      responses:
+        "200":
+          description: Successful response
+  /v1/revoke-cert:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                oauthClientId:
+                  type: string
+                  pattern: ^[a-zA-Z0-9-_. ]+$
+              required:
+                - oauthClientId
+      responses:
+        "200":
+          description: Successful response
+  /v1/register-and-activate:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  pattern: ^[a-zA-Z0-9-_. ]+$
+                environment:
+                  type: string
+                  pattern: ^(test|prod)$
+                abn:
+                  type: string
+                  pattern: ^[1-9][0-9]{10}$
+                type:
+                  type: string
+                  pattern: ^[a-zA-Z0-9-_. ]+$
+                csr:
+                  type: string
+                  pattern: ^-----BEGIN NEW CERTIFICATE REQUEST-----.*-----END NEW CERTIFICATE
+                    REQUEST-----$
+              required:
+                - name
+                - environment
+                - abn
+                - type
+                - csr
+      responses:
+        "200":
+          description: Successful response
+  /v1/retrieve-device-list:
+    get:
+      parameters:
+        - name: abn
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+  /v1/retrieve-device-detail:
+    get:
+      parameters:
+        - name: deviceId
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+  /v1/get-aggregator-list:
+    get:
+      parameters:
+        - name: abn
+          in: query
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Successful response
+  /v1/delete-device:
+    post:
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                deviceId:
+                  type: string
+              required:
+                - deviceId
+      responses:
+        "200":
+          description: Successful response
+components: {}
